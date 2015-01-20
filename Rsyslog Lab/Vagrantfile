@@ -11,27 +11,28 @@ Vagrant.configure(2) do |config|
     client.vm.box = "centos-base"
     client.vm.box_url = "https://s3.amazonaws.com/rhcsa/centos-base.box"
     client.vm.hostname = "client"
-    client.vm.network :private_network, ip: "172.19.20.21"
+    client.vm.network :private_network, ip: "172.19.20.22"
     client.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
       vb.gui = false
         # Customize the amount of memory on the VM:
       vb.memory = "512"
     end
-    client.vm.provision "shell", path: "provision-client.sh"
   end
 
   config.vm.define "server" do |server|
     server.vm.box = "centos-base"
     server.vm.box_url = "https://s3.amazonaws.com/rhcsa/centos-base.box"
     server.vm.hostname = "server"
-    server.vm.network :private_network, ip: "172.19.20.22"
+    server.vm.network :private_network, ip: "172.19.20.21"
     server.vm.provider "virtualbox" do |vb|
       # Display the VirtualBox GUI when booting the machine
       vb.gui = false
         # Customize the amount of memory on the VM:
       vb.memory = "512"
     end
-    server.vm.provision "shell", path: "provision-server.sh"
+    server.vm.provision "puppet" do |puppet|
+      puppet.manifest_file = "server.pp"
+    end
   end
 end
