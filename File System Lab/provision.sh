@@ -6,4 +6,4 @@ useradd adam
 chmod -R 775 /fslab
 chattr +i /fslab/log
 setfacl -R -m u:adam:--- /fslab/test
-yum install -yq gdisk
+yum install -y -q gdisk
